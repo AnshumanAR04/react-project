@@ -1,12 +1,15 @@
+//including modules 
 import React from 'react';
 
 export default class RenderData extends React.Component {
-    constructor(props) {
+    constructor(props) 
+    {
         super(props);
         this.navigate = this.navigate.bind(this);
     }
-
-    navigate(index) {
+    //This function changes the history property of props to '/info' so that the info page can be rendered 
+    navigate(index) 
+    {
         this.props.history.push('/info',
             {
                 repositoryDataIndex: index,
@@ -16,15 +19,18 @@ export default class RenderData extends React.Component {
             })
     }
 
-    render() {
+    //This function holds the data to be rendered on the browser
+    render() 
+    {
+        //Preparring the Table of Search Results
         let tableRow = [];
         for (let repository in this.props.searchResult) {
             tableRow.push(
                 <tr key={repository}>
-                    <td>{this.props.searchResult[repository]["name"]}</td>
-                    <td className="align-center">{this.props.searchResult[repository]["score"]}</td>
-                    <td className="align-center">{this.props.searchResult[repository]["forks"]}</td>
-                    <td className="align-center">{this.props.searchResult[repository]["watchers"]}</td>
+                    <td>{this.props.searchResult[repository]['name']}</td>
+                    <td className="align-center">{this.props.searchResult[repository]['score']}</td>
+                    <td className="align-center">{this.props.searchResult[repository]['forks']}</td>
+                    <td className="align-center">{this.props.searchResult[repository]['watchers']}</td>
                     <td className="align-center">
                         <button className="btn-sm btn-primary" onClick={this.navigate.bind(this, repository)}>More</button>
                     </td>

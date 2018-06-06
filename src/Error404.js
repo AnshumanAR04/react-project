@@ -1,16 +1,22 @@
+//Including modules and components
 import React from 'react';
 
+//The Error Component 
 export default class Error404 extends React.Component{
-    constructor(props){
+    constructor(props)
+    {
         super(props);
         this.navigate = this.navigate.bind(this);
     }
 
-    navigate(){
+    //This function changes the history property of props to '/' so that the home page can be rendered 
+    navigate()
+    {
         this.props.history.push('/');
     }
-
-    render(){
+    //This function holds the data to be rendered on the browser
+    render()
+    {
         return(
             <center>
                 <h1>Sorry</h1>

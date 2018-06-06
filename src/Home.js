@@ -1,14 +1,21 @@
+//Including modules and components
 import React from 'react';
 import $ from 'jquery';
 import RenderData from './RenderData';
-import Input from "./Input";
+import Input from './Input';
 
-export default class Home extends React.Component{
-    constructor(props){
+//The home component
+export default class Home extends React.Component
+{
+    
+    //The constructor for Home Component 
+    constructor(props)
+    {
         super(props);
+        //Defining initial values of state
         this.state={
-            keyword:"", searchResult:[],
-            sortBy:{value:"score",label:"Score"}
+            keyword:'', searchResult:[],
+            sortBy:{value:'score',label:'Score'}
         };
         if(this.props.location.state!==undefined){
             this.state={
@@ -17,32 +24,35 @@ export default class Home extends React.Component{
                 sortBy:this.props.location.state.sortBy
             }
         }
+        //Binding all the functions
         this.navigate = this.navigate.bind(this);
         this.changeState = this.changeState.bind(this);
         this.search = this.search.bind(this);
         this.changeSort = this.changeSort.bind(this);
     }
-    //api fetch
-    search(){
-        if(this.state.keyword === "")
+    //This function fetches the user details from the Githib api
+    search()
+    {
+        if(this.state.keyword === '')
             return;
-        document.getElementById('Loading').classList.add("loader");
+        document.getElementById('Loading').classList.add('loader');
         $.ajax({
             url: 'https://api.github.com/search/repositories',
             type: 'GET',
             data: {q:this.state.keyword},
             success: (response)=>{
-                let searchResult = response["items"];
-                let sortBy = this.state.sortBy["value"];
+                let searchResult = response['items'];
+                let sortBy = this.state.sortBy['value'];
                 searchResult.sort(function(a,b) {return ((a[sortBy] > b[sortBy])?1:-1)} );
-                this.setState({searchResult:response["items"]});
-                document.getElementById('Loading').classList.remove("loader");
+                this.setState({searchResult:response['items']});
+                document.getElementById('Loading').classList.remove('loader');
             }
         });
     }
-
-    changeSort(sort){
-        let sortBy = sort["value"];
+    //This function changes the sorting parameter of the list of results
+    changeSort(sort)
+    {
+        let sortBy = sort['value'];
       
         let newSearchResults = this.state.searchResult;
         newSearchResults.sort(function(a,b) {return ((a[sortBy] < b[sortBy])?1:-1)} );
@@ -50,18 +60,22 @@ export default class Home extends React.Component{
       
     }
 
-
-    changeState(key,value){
+    //This function changes the state for us. 
+    //This is a generic function which we use to change the state variables when needed
+    changeState(key,value)
+    {
         this.setState({
             [key]:value
         })
     }
-
-    navigate(){
+    //This functions changes the history of props for navigation
+    navigate()
+    {
         this.props.history.push('/ansh');
     }
-
-    render(){
+    //This function holds the data to be rendered on the browser
+    render()
+    {
         return(
             <div className="margin-bottom-10">
                 <center>
